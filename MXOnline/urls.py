@@ -15,8 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.views.generic import TemplateView
+from apps.organizations.views import OrgView
+from apps.users.views import LoginView
+from apps.courses.views import CourseOrgView
+from django.conf.urls import url,include
+from django.views.static import serve
+from MXOnline.settings import MEDIA_ROOT
 import xadmin
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('xadmin',xadmin.site.urls)
+    path('xadmin',xadmin.site.urls),
+    # path('',views.index)
+    path('',TemplateView.as_view(template_name='index.html'),name='index'),
+    path('login/',LoginView.as_view(),name='login'),
+    # path('orglist/',OrgView.as_view(),name='orglist'),
+    #配置授课机构相关操作
+    url(r'^org/',include(('apps.organizations.urls','organizations'),namespace='org')),
+    path('course/',CourseOrgView.as_view(),name='course'),
+    url(r'^media/(?P<path>.*)$',serve,{"document_root":MEDIA_ROOT}),
+
 ]

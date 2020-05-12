@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'xadmin',
     'apps.organizations.apps.OrganizationsConfig',
     'apps.operations.apps.OperationsConfig',
+    'pure_pagination',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -129,3 +131,16 @@ AUTH_USER_MODEL = "users.UserProfile"
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+MEDIA_URL='/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 5,  #主分页部分显示几个
+    'MARGIN_PAGES_DISPLAYED': 1, #省略号前后显示几个
+
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True,
+}
